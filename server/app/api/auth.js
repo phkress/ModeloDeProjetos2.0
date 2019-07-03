@@ -40,6 +40,7 @@ module.exports = function(app) {
                      return res.sendStatus(401);
                  } else {
                      console.log('Token aceito')
+                    console.log("verificatoken: "+decoded.login)
                      req.usuario = decoded;
                      next();
                   }
