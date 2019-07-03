@@ -31,7 +31,8 @@ export default class Formulario {
     contatos='',
     parecer='',
     impacto='',
-    cet=''
+    cet='',
+    status='pré-viabilidade'
 
   ){
     this.numeroDoProjeto = numeroDoProjeto;
@@ -65,5 +66,6 @@ export default class Formulario {
     this.contatos = contatos;
     this.parecer = parecer;
     this.cet = cet;
+    this.status= status;
   }
 }

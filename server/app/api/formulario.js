@@ -37,7 +37,8 @@ module.exports = function(app) {
 					 numeroDoProjeto:formularioNome[i].numeroDoProjeto,
 					 nomeDoProjeto:formularioNome[i].nomeDoProjeto,
 					 prioridade:formularioNome[i].prioridade,
-					 data:formularioNome[i].data
+					 data:formularioNome[i].data,
+					 status:formularioNome[i].status
 				 });
       }
       console.log(resposta);

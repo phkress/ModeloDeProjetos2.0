@@ -25,6 +25,8 @@
           <th scope="col">Nome</th>
           <th scope="col">Prioridade</th>
           <th scope="col">Data (aaaa-mm-dd)</th>
+          <th scope="col">Status</th>
+          <th scope="col">Tempo</th>
           <th scope="col" colspan="3">Ações</th>
         </tr>
       </thead>
@@ -35,6 +37,8 @@
             <td scope="col">{{form.nomeDoProjeto}}</td>
             <td scope="col" class="text-uppercase" v-bind:class="getColor(form.prioridade)"><strong>{{form.prioridade}}</strong></td>
             <td scope="col">{{form.data}}</td>
+            <td scope="col">{{form.status}}</td>
+            <td scope="col">48:00</td>
             <td>
               <router-link :to="{ name : 'formularioProjeto', params: { id: form._id} }">
                 <button type="button" class="btn btn-link">

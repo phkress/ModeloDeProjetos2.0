@@ -34,7 +34,10 @@ var schema = mongoose.Schema({
     type: String,
     required: false
   },
-  checkbox: {},
+  checkbox: {
+    type: String,
+    required: false
+  },
   descricaoDaDemanda: {
     type: String,
     required: false
@@ -120,6 +123,10 @@ var schema = mongoose.Schema({
     required: false
   },
   cet: {
+    type: String,
+    required: false
+  },
+  status:{
     type: String,
     required: false
   }
