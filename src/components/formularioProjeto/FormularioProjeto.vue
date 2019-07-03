@@ -1072,9 +1072,6 @@ export default {
 .normal{
   background-color: #E8D200;
 }
-.ruim{
-  background-color: #F9720E;
-}
 .deuRuim{
   background-color: #DF0000;
 }

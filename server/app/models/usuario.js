@@ -9,6 +9,22 @@ var schema = mongoose.Schema({
     senha: {
         type: String,
         required: true
+    },
+    nome:{
+      type: String,
+      required:true
+    },
+    sobreNome:{
+      type: String,
+      required:true
+    },
+    email:{
+      type: String,
+      required:true
+    },
+    role:{
+      type: String,
+      required:true
     }
 });
 

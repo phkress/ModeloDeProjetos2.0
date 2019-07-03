@@ -17,12 +17,12 @@
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
             <b-nav-text>
-              
+
             </b-nav-text>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template slot="button-content"><em>User</em></template>
-              <b-dropdown-item href="#" disabled>Profile</b-dropdown-item>
+              <b-dropdown-item :to="'/profile'">Profile</b-dropdown-item>
               <b-dropdown-item :to="'/configuracao'" disabled>Configuração</b-dropdown-item>
               <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>

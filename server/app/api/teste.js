@@ -51,7 +51,7 @@ module.exports = function(app) {
 		});
   }
   api.adiciona = function(req, res) {
-    model.create({"login": "teste", "senha": "123"})
+    model.create({"login": "padrao", "senha": "123","nome": "pedro","sobreNome":"Kress","email":"pedro.kress@yipi.com.br","role":"Projeto"})
 		.then(function(usuario) {
 			res.json(usuario);
 		}, function(error) {
