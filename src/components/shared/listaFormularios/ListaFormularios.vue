@@ -12,7 +12,7 @@
      <b-col><h4 style="text-align:center">Formularios</h4></b-col>
      <b-col>
        <router-link :to='{name: "formularioProjeto"}'>
-        <button type="button" class="btn btn-primary pull-right">Novo Formualario</button>
+        <button type="button" class="btn btn-primary pull-right">Novo Projeto</button>
       </router-link>
      </b-col>
    </b-row>
@@ -35,7 +35,7 @@
             <td scope="col">{{index}}</td>
             <td scope="col"><p>{{form.numeroDoProjeto}}</p></td>
             <td scope="col"><p>{{form.nomeDoProjeto}}</p></td>
-            <td scope="col" class="text-uppercase" v-bind:class="getColor(form.prioridade)"><strong><p>{{form.prioridade}}</p></strong></td>
+            <td scope="col" class="text-uppercase bordinha" v-bind:class="getColor(form.prioridade)"><strong><p>{{form.prioridade}}</p></strong></td>
             <td scope="col"><p>{{form.data}}</p></td>
             <td scope="col"><p>{{form.status}}</p></td>
             <td scope="col">
@@ -83,7 +83,6 @@ export default {
   data: () => ({
       filtro: '',
       formularios: [],
-      bgColor:'Normal'
   }),
   computed: {
     projetosComFiltro(){
@@ -142,11 +141,14 @@ export default {
 }
 </script>
 <style lang="css" scoped>
+.bordinha{
+  border-radius: 30px;
+}
 .suave{
-  background-color: #8EDB35;
+  background-color: #20c997;
 }
 .normal{
-  background-color: #E8D200;
+  background-color: #ffc107;
 }
 .ruim{
   background-color: #F9720E;
