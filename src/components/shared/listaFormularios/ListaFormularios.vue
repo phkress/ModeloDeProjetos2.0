@@ -33,12 +33,17 @@
       <tbody>
           <tr v-for="(form,index) of projetosComFiltro">
             <td scope="col">{{index}}</td>
-            <td scope="col">{{form.numeroDoProjeto}}</td>
-            <td scope="col">{{form.nomeDoProjeto}}</td>
-            <td scope="col" class="text-uppercase" v-bind:class="getColor(form.prioridade)"><strong>{{form.prioridade}}</strong></td>
-            <td scope="col">{{form.data}}</td>
-            <td scope="col">{{form.status}}</td>
-            <td scope="col">48:00</td>
+            <td scope="col"><p>{{form.numeroDoProjeto}}</p></td>
+            <td scope="col"><p>{{form.nomeDoProjeto}}</p></td>
+            <td scope="col" class="text-uppercase" v-bind:class="getColor(form.prioridade)"><strong><p>{{form.prioridade}}</p></strong></td>
+            <td scope="col"><p>{{form.data}}</p></td>
+            <td scope="col"><p>{{form.status}}</p></td>
+            <td scope="col">
+              <clock
+                :time="form.timer"
+              ></clock>
+
+            </td>
             <td>
               <router-link :to="{ name : 'formularioProjeto', params: { id: form._id} }">
                 <button type="button" class="btn btn-link">
@@ -69,11 +74,16 @@
 </template>
 <script>
 import FormularioService from '../../../domain/formulario/FormularioService';
+import Relogio from '../relogio/Relogio.vue';
 export default {
   name: "ListaDeFormularios",
+  components: {
+    'clock': Relogio,
+  },
   data: () => ({
       filtro: '',
-      formularios: []
+      formularios: [],
+      bgColor:'Normal'
   }),
   computed: {
     projetosComFiltro(){
@@ -143,5 +153,9 @@ export default {
 }
 .deuRuim{
   background-color: #DF0000;
+}
+p{
+  padding: 10px;
+  margin-bottom: 0;
 }
 </style>

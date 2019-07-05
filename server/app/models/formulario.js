@@ -129,6 +129,9 @@ var schema = mongoose.Schema({
   status:{
     type: String,
     required: false
+  },
+  timer:{
+    type: String
   }
 
 });

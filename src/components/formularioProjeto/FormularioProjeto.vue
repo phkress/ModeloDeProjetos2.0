@@ -746,6 +746,7 @@ import Formulario from "../../domain/formulario/Formulario";
 import FormularioService from '../../domain/formulario/FormularioService';
 import Pop from "../../domain/pop/Pop";
 import PopService from '../../domain/pop/PopService';
+import moment from 'moment';
 export default {
   name: "FormularioProjeto",
   data() {
@@ -988,6 +989,7 @@ export default {
       }
     },
     grava(){
+      this.setTime();
       this.service
         .cadastra(this.formulario)
         .then(() => {
@@ -1000,6 +1002,9 @@ export default {
         });
 
     },
+    setTime(){
+      this.formulario.timer = moment().format('x')
+    }
   },
   created() {
     this.popService = new PopService(this.$resource);
