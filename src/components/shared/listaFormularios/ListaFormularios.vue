@@ -83,7 +83,6 @@ export default {
   data: () => ({
       filtro: '',
       formularios: [],
-      bgColor:'Normal'
   }),
   computed: {
     projetosComFiltro(){
@@ -143,10 +142,10 @@ export default {
 </script>
 <style lang="css" scoped>
 .suave{
-  background-color: #8EDB35;
+  background-color: #20c997;
 }
 .normal{
-  background-color: #E8D200;
+  background-color: #ffc107;
 }
 .ruim{
   background-color: #F9720E;
