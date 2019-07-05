@@ -7,6 +7,10 @@
         {{relogio.minutes}}:
         {{relogio.seconds}}
       </div>
+      <b-spinner
+        v-else
+        variant="success"
+      ></b-spinner>
 
     </div>
 </template>
@@ -87,10 +91,10 @@ export default {
     background-color: #ffc107;
   }
   .ruim{
-    background-color: #F9720E;
+    background-color: #fd7e14;
   }
   .deuRuim{
-    background-color: #DF0000;
+    background-color: #dc3545;
   }
   .card-body{
     padding:0.5rem;

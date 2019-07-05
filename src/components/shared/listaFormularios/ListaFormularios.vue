@@ -9,7 +9,7 @@
           </b-input-group>
        </b-form>
      </b-col>
-     <b-col><h4 style="text-align:center">Formularios</h4></b-col>
+     <b-col><h4 style="text-align:center">Projetos</h4></b-col>
      <b-col>
        <router-link :to='{name: "formularioProjeto"}'>
         <button type="button" class="btn btn-primary pull-right">Novo Projeto</button>
@@ -151,10 +151,10 @@ export default {
   background-color: #ffc107;
 }
 .ruim{
-  background-color: #F9720E;
+  background-color: #fd7e14;
 }
 .deuRuim{
-  background-color: #DF0000;
+  background-color: #dc3545;
 }
 p{
   padding: 10px;
