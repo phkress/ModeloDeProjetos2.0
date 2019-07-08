@@ -16,8 +16,8 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-nav-text>
-
+            <b-nav-text right>
+              Olá, {{this.store.username}}
             </b-nav-text>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
@@ -33,6 +33,7 @@
   </div>
 </template>
 <script>
+import store from '../../../store/store';
 export default {
   name: "BarraDeMenu",
   props: {
@@ -46,6 +47,7 @@ export default {
     }
   },
   data: () => ({
+    store,
 
   })
 }
