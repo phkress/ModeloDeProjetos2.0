@@ -32,7 +32,7 @@ export default class Formulario {
     parecer='',
     impacto='',
     cet='',
-    status='Aberto'
+    status='Lançando'
 
   ){
     this.numeroDoProjeto = numeroDoProjeto;

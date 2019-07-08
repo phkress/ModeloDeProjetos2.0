@@ -739,15 +739,20 @@
       </b-col>
     </b-form-row>
     <b-form-row class="mb-2">
-      <b-col>
-      <b-button type="submit" variant="primary">
-          Salvar
-      </b-button>
+      <b-col cols="2">
+        <b-button type="submit" variant="primary">
+            Salvar sem enviar
+        </b-button>
       </b-col>
       <b-col>
-      <b-button  variant="danger" :to="{ name: 'home', params: {} }"  class="right">
-          Cancelar
-      </b-button>
+        <b-button type="button" variant="success" @click="sendForm()">
+            Salvar e Enviar para: {{bstatus}}
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button  variant="danger" :to="{ name: 'home', params: {} }"  class="right">
+            Cancelar
+        </b-button>
       </b-col>
     </b-form-row>
     </b-form>
@@ -770,6 +775,7 @@ export default {
           edicao : false ,
           showMe: {},
           msg:null,
+          bstatus:null,
           file:null,
           solicitantes:[{ text: 'Escolha um...', value: null },{ text: 'Comercial', value: 'Comercial' },"Diretoria Operações","Operação","Outros"],
           options:[
@@ -1036,7 +1042,46 @@ export default {
           // this.$router.push("login");
           console.log(err)
         });
+    },
+    sendForm(){
+      this.formulario.status = this.setNewStatus(this.formulario.status);
+      this.setTime();
+      this.grava();
 
+    },
+    setNewStatus(status){
+      console.log(status);
+      let newStatus;
+      switch(status){
+        case 'Lançando':
+          newStatus = 'Aberto';
+          break;
+        case 'Aberto':
+          newStatus = 'Pré-Viabilidade';
+          break;
+        case 'Pré-Viabilidade':
+          newStatus = 'Orçamento';
+          break;
+        case 'Orçamento':
+          newStatus = 'Compras';
+          break;
+        case 'Compras':
+          newStatus = 'Engenharia';
+          break;
+         case 'Engenharia':
+          newStatus = 'Instalação';
+          break;
+        case 'Instalação':
+          newStatus = 'Entregue';
+          break;
+       case 'Entregue':
+          newStatus = 'Entregue';
+          break;
+       default:
+          newStatus = 'Lançando';
+          break;
+      }
+      return newStatus;
     },
     setTime(){
       this.formulario.timer = moment().format('x')
@@ -1074,16 +1119,21 @@ export default {
       this.service
         .busca(this.id)
         .then(form => {
-          form.precificacao ={
-            customMb: form.precificacao.customMb,
-            markUP: form.precificacao.markUP,
-            parcelas: form.precificacao.parcelas,
-            qtdeMb: form.precificacao.qtdeMb,
-            valorCobrado: form.precificacao.valorCobrado,
-            valorInstalacao: form.precificacao.valorInstalacao,
-            valorMb: form.precificacao.valorMb
-          };
+          if(form.precificacao = 'undefined'){
+            form.precificacao ={};
+          }else{
+            form.precificacao ={
+              customMb: form.precificacao.customMb,
+              markUP: form.precificacao.markUP,
+              parcelas: form.precificacao.parcelas,
+              qtdeMb: form.precificacao.qtdeMb,
+              valorCobrado: form.precificacao.valorCobrado,
+              valorInstalacao: form.precificacao.valorInstalacao,
+              valorMb: form.precificacao.valorMb
+            };
+          }
           this.formulario = form
+          this.bstatus = this.setNewStatus(form.status);
           this.outputValorStandard()
           this.outputValorCet()
           this.outputValorSugerido()
@@ -1103,6 +1153,8 @@ export default {
       console.log(err);
     });
     this.isShow(this.store.role);
+    //this.setNewStatus(this.formulario.status);
+
   }
 
 }
