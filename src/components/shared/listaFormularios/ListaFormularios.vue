@@ -11,7 +11,7 @@
      </b-col>
      <b-col><h4 style="text-align:center">Projetos</h4></b-col>
      <b-col>
-       <router-link :to='{name: "formularioProjeto"}'>
+       <router-link v-if="roleShow()" :to='{name: "formularioProjeto"}'>
         <button type="button" class="btn btn-primary pull-right">Novo Projeto</button>
       </router-link>
      </b-col>
@@ -40,12 +40,13 @@
             <td scope="col"><p>{{form.status}}</p></td>
             <td scope="col">
               <clock
+                v-if="form.status !== 'Entregue' ? true : false"
                 :time="form.timer"
               ></clock>
 
             </td>
             <td>
-              <router-link :to="{ name : 'formularioProjeto', params: { id: form._id} }">
+              <router-link v-if="form.status !== 'Entregue' ? true : false" :to="{ name : 'formularioProjeto', params: { id: form._id} }">
                 <button type="button" class="btn btn-link">
                     <span class="glyphicon glyphicon-pencil"></span>
                     Editar
@@ -61,7 +62,7 @@
               </a>
             </td>
             <td>
-              <button type="button" class="btn btn-link" @click='remover(form,index)'>
+              <button v-if="form.status !== 'Entregue' ? true : false" type="button" class="btn btn-link" @click='remover(form,index)'>
                   <span class="glyphicon glyphicon-trash"></span>
                   Excluir
               </button>
@@ -75,6 +76,7 @@
 <script>
 import FormularioService from '../../../domain/formulario/FormularioService';
 import Relogio from '../relogio/Relogio.vue';
+import store from '../../../store/store';
 export default {
   name: "ListaDeFormularios",
   components: {
@@ -82,6 +84,7 @@ export default {
   },
   data: () => ({
       filtro: '',
+      store,
       formularios: [],
   }),
   computed: {
@@ -125,7 +128,11 @@ export default {
 
         });
     },
-
+    roleShow(){
+      if((this.store.role == "Projeto") || (this.store.role == "Comercial") ){
+        return true
+      }
+    }
   },
   created() {
     this.service = new FormularioService(this.$resource);
@@ -136,6 +143,7 @@ export default {
         // this.$router.push("login");
         console.log(err)
       });
+
 
   }
 }
