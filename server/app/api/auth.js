@@ -18,12 +18,12 @@ module.exports = function(app) {
              res.sendStatus(401);
          } else {
             console.log(usuario.login)
-             var token = jwt.sign({login: usuario.login}, app.get('secret'), {
+             var token = jwt.sign({login: usuario.login, role: usuario.role}, app.get('secret'), {
                  expiresIn: 84600
              });
              console.log('Autenticado: token adicionado na resposta');
              res.set('x-access-token', token);
-             res.status(200).send({token:token});
+             res.status(200).send({token:token, role:usuario.role});
              res.end();
          }
      });

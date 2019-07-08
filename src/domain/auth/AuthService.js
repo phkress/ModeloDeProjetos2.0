@@ -8,7 +8,7 @@ export default class AuthService {
     return this._resource
     .save(user)
     .then(res => res, err => {
-        console.log(err);
+        //console.log(err);
         throw new Error('Não foi possível validar credencial');
     });
   }

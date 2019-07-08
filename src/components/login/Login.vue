@@ -1,6 +1,10 @@
 <template lang="html">
   <form class="center-forme" @submit.prevent="logar()">
+
     <img src="dist/logo.png" alt="Logo Yipi" class="loginLogo">
+    <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+       Usuario ou senha invalidos
+    </b-alert>
     <div class="form-group">
       <label for="exampleInputEmail1">User</label>
       <input type="text" class="form-control" value='adm' v-model='user.login'>
@@ -22,6 +26,7 @@ export default {
     return {
       user: new Auth(),
       store,
+      showDismissibleAlert: false
     }
   },
   methods:{
@@ -30,19 +35,20 @@ export default {
       .then((res)=>{
         this.store.token = res.data.token;
         this.store.username = this.user.login;
+        this.store.role = res.data.role;
         this.$router.push('home')
       }, err => {
-          this.store.token = '';
-          this.store.username = '';
-          this.$router.push('login');
-          console.log("token invalido");
+          //this.$router.push('login');
+          this.showDismissibleAlert = true;
       })
     },
 
   },
   created() {
-    this.store.token = '';
-    this.store.username = '';
+    localStorage.clear();
+        this.store.token = '';
+        this.store.username = '';
+        this.store.role = '';
     this.service = new AuthService(this.$resource);
   }
 }
