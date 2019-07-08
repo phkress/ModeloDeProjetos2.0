@@ -296,8 +296,13 @@
       </div>
       <div class="m-4 w-100"></div>
       <hr>
-      <div id='capex' v-if="showMe.capex">
+      <div id='capex' v-if="showMe.compras">
       <h4>CAPEX / LISTA DE AQUISIÇÕES</h4>
+      <b-form-row>
+        <b-alert v-model="edicao" variant="warning" dismissible>
+          {{msg}}
+        </b-alert>
+      </b-form-row>
       <b-form-row>
         <b-form inline>
         <b-col>
@@ -357,8 +362,13 @@
             <template slot="item" slot-scope="row">
               {{row.index}}
             </template>
-            <template slot="ação" slot-scope="row">
-              <b-button size="sm" @click="removelist(row.index, row.item.valor)">
+            <template slot="editar" slot-scope="row">
+              <b-button size="sm" variant="warning" @click="editarList(row.index, row.item.valor)">
+                Editar
+              </b-button>
+            </template>
+            <template slot="excluir" slot-scope="row">
+              <b-button size="sm" variant="danger"  @click="removelist(row.index, row.item.valor)">
                 Excluir
               </b-button>
             </template>
@@ -757,7 +767,9 @@ export default {
         return {
           formulario: new Formulario(),
           store,
+          edicao : false ,
           showMe: {},
+          msg:null,
           file:null,
           solicitantes:[{ text: 'Escolha um...', value: null },{ text: 'Comercial', value: 'Comercial' },"Diretoria Operações","Operação","Outros"],
           options:[
@@ -768,7 +780,7 @@ export default {
           { text: 'MELHORIAS', value: 'MELHORIAS' },
           { text: 'OUTROS', value: 'OUTROS' },
         ],
-          fields: ['item','descricao', 'parcela', 'valor','ação'],
+          fields: ['item','descricao', 'parcela', 'valor','editar','excluir'],
           areasEnvolvidasSelect:["Diretoria Operações", "Implantação","Operação","Manutencação","Comercial","Engenharia","Financeiro","Compras","Juridico"],
           show: true,
           foto:null,
@@ -776,7 +788,7 @@ export default {
           popLista: ['Outros'],
           id: this.$route.params.id,
           listaAreasEnvolvidas:[],
-          itlist :{},
+          itlist :{descricao:"", valor:"", parcela:""},
           cet:{
             valor:null,
             analiseDeRisco:0.16,
@@ -791,16 +803,35 @@ export default {
   },
   methods: {
     addlist(){
+      if(!this.itlist.descricao){
+        alert("Não existe item para adicionar")
+        return;
+      }
         this.formulario.capex.push(this.itlist);
         this.itlist.valor = this.itlist.valor.replace(',','.');
         this.formulario.ittotal+=parseFloat(this.itlist.valor);
         this.formulario.ittotal = parseFloat(this.formulario.ittotal.toFixed(2));
-        this.itlist = {}
+        this.itlist = {descricao:"", valor:"", parcela:""}
+        if(this.edicao){
+          this.edicao =  false;
+        }
     },
     removelist(index,valor){
       this.formulario.capex.splice(index, 1);
       this.formulario.ittotal = this.formulario.ittotal - parseFloat(valor);
       this.formulario.ittotal = parseFloat(this.formulario.ittotal.toFixed(2));
+    },
+    editarList(index,valor){
+      if(this.edicao){
+        this.msg = 'Ja existe um item em edição'
+        return;
+      }
+      this.itlist.descricao = this.formulario.capex[index].descricao;
+      this.itlist.parcela = this.formulario.capex[index].parcela;
+      this.itlist.valor = this.formulario.capex[index].valor;
+      this.msg = 'Edição do item: '+this.formulario.capex[index].descricao;
+      this.edicao = true;
+      this.removelist(index,valor);
     },
     getPrioridade(){
       let prioridade = '';
@@ -994,7 +1025,7 @@ export default {
       }
     },
     grava(){
-      this.setTime();
+      //this.setTime();
       this.service
         .cadastra(this.formulario)
         .then(() => {
@@ -1013,10 +1044,10 @@ export default {
     isShow(role){
       let show;
       switch (role) {
-        case 'Projetos':
+        case 'Projeto':
            show ={abertura: true, viabilidade:true, capex: true, compras:true, infoLink:true, projeto:true}
            break;
-        case 'Compras':
+        case 'Compra':
            show ={abertura: false, viabilidade:false, capex: false, compras:true, infoLink:false, projeto:false}
            break;
         case 'Engenharia':
