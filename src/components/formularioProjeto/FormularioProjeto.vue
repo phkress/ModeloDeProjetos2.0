@@ -2,7 +2,7 @@
   <div id="FormularioProjeto" class="mt-3">
     <b-container class="FormularioProjetoTextLeft">
       <b-form @submit.prevent="grava()">
-
+      <div id="abertura" v-if="showMe.abertura">
       <b-form-row>
         <b-col>
           <b-form-group
@@ -168,7 +168,8 @@
           </b-form-group>
         </b-col>
       </b-form-row>
-
+    </div>
+    <div id="viabilidade" v-if="showMe.viabilidade">
       <b-form-row class="my-4">
         <b-col>
           <b-form-file
@@ -292,9 +293,10 @@
       </b-card>
 
       </b-form-row>
-
+      </div>
       <div class="m-4 w-100"></div>
       <hr>
+      <div id='capex' v-if="showMe.capex">
       <h4>CAPEX / LISTA DE AQUISIÇÕES</h4>
       <b-form-row>
         <b-form inline>
@@ -339,7 +341,7 @@
             <b-form-input
               id="input-14"
               v-model="itlist.parcela"
-              type="text"
+              type="number"
               placeholder="4"
             ></b-form-input>
           </b-form-group>
@@ -372,8 +374,8 @@
           <p>Total R$: {{ formulario.ittotal }}</p>
         </b-col>
       </b-form-row>
-
-      <b-form-row >
+      </div>
+      <b-form-row v-if="showMe.viabilidade">
         <b-col col md="6" lg='6'>
           <table class="table">
                 <thead>
@@ -441,6 +443,7 @@
               </table>
         </b-col>
       </b-form-row>
+      <div id='Engenharia' v-if="showMe.infoLink">
       <b-form-row>
         <b-col>
           <b-form-group
@@ -632,8 +635,8 @@
 
       </b-col>
     </b-form-row>
-
-    <b-form-row>
+    </div>
+    <b-form-row v-if="showMe.projeto">
       <b-col>
         <b-form-group
           id="input-group-21"
@@ -672,7 +675,7 @@
       </b-col>
     </b-form-row>
 
-    <b-form-row>
+    <b-form-row  v-if="showMe.infoLink">
       <b-col>
         <b-form-group
           id="textarea-group-5"
@@ -690,7 +693,7 @@
       </b-col>
     </b-form-row>
 
-    <b-form-row>
+    <b-form-row  v-if="showMe.projeto">
       <b-col>
         <b-form-group
           id="textarea-group-6"
@@ -708,7 +711,7 @@
       </b-col>
     </b-form-row>
 
-    <b-form-row>
+    <b-form-row  v-if="showMe.projeto">
       <b-col>
         <b-form-group
           id="textarea-group-7"
@@ -742,6 +745,7 @@
   </div>
 </template>
 <script>
+import store from '../../store/store'
 import Formulario from "../../domain/formulario/Formulario";
 import FormularioService from '../../domain/formulario/FormularioService';
 import Pop from "../../domain/pop/Pop";
@@ -752,6 +756,8 @@ export default {
   data() {
         return {
           formulario: new Formulario(),
+          store,
+          showMe: {},
           file:null,
           solicitantes:[{ text: 'Escolha um...', value: null },{ text: 'Comercial', value: 'Comercial' },"Diretoria Operações","Operação","Outros"],
           options:[
@@ -782,7 +788,6 @@ export default {
             comissoes:0
           }
         }
-
   },
   methods: {
     addlist(){
@@ -1004,6 +1009,30 @@ export default {
     },
     setTime(){
       this.formulario.timer = moment().format('x')
+    },
+    isShow(role){
+      let show;
+      switch (role) {
+        case 'Projetos':
+           show ={abertura: true, viabilidade:true, capex: true, compras:true, infoLink:true, projeto:true}
+           break;
+        case 'Compras':
+           show ={abertura: false, viabilidade:false, capex: false, compras:true, infoLink:false, projeto:false}
+           break;
+        case 'Engenharia':
+           show ={abertura: false, viabilidade:false, capex: false, compras:false, infoLink:true, projeto:false}
+           break;
+        case 'Comercial':
+           show ={abertura: true, viabilidade:false, capex: false, compras:false, infoLink:false, projeto:false}
+           break;
+         case 'Financeiro':
+            show ={abertura: false, viabilidade:false, capex: true, compras:true, infoLink:false, projeto:false}
+            break;
+       default:
+         show = {abertura: false, viabilidade:false, capex: false, compras:false, infoLink:false, projeto:false};
+       break;
+     }
+     this.showMe = show;
     }
   },
   created() {
@@ -1042,6 +1071,7 @@ export default {
     }, err => {
       console.log(err);
     });
+    this.isShow(this.store.role);
   }
 
 }
