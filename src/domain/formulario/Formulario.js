@@ -25,14 +25,14 @@ export default class Formulario {
     mask='',
     gateway='',
     entregasSeremDefinidas='',
-    areasEnvolvidas='',
+    areasEnvolvidas=["Implantação"],
     popAUtilizar='',
     pendencias='',
     contatos='',
     parecer='',
     impacto='',
     cet='',
-    status='pré-viabilidade'
+    status='Aberto'
 
   ){
     this.numeroDoProjeto = numeroDoProjeto;
