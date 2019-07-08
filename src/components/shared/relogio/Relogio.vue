@@ -1,6 +1,5 @@
 <template>
     <div id="Relogio">
-
       <div v-if="this.relogio != null" class="format" :class="color">
         D:{{relogio.days}} - H:
         {{relogio.hours}}:
@@ -83,6 +82,7 @@ export default {
     padding: 10px;
     margin: 0;
     border-radius: 20px;
+    color:#343a40;
   }
   .suave{
     background-color: #20c997;

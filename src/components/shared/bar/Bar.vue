@@ -21,10 +21,10 @@
             </b-nav-text>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
-              <template slot="button-content"><em>User</em></template>
+              <template slot="button-content"><em>Menu</em></template>
               <b-dropdown-item :to="'/profile'">Profile</b-dropdown-item>
               <b-dropdown-item :to="'/configuracao'" disabled>Configuração</b-dropdown-item>
-              <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
+              <b-dropdown-item :to="'/login'">Sair</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>

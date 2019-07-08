@@ -35,7 +35,7 @@
             <td scope="col">{{index}}</td>
             <td scope="col"><p>{{form.numeroDoProjeto}}</p></td>
             <td scope="col"><p>{{form.nomeDoProjeto}}</p></td>
-            <td scope="col" class="text-uppercase bordinha" v-bind:class="getColor(form.prioridade)"><strong><p>{{form.prioridade}}</p></strong></td>
+            <td scope="col" class="text-uppercase"><strong><p v-bind:class="getColor(form.prioridade)" class="bordinha format">{{form.prioridade}}</p></strong></td>
             <td scope="col"><p>{{form.data}}</p></td>
             <td scope="col"><p>{{form.status}}</p></td>
             <td scope="col">
@@ -141,6 +141,12 @@ export default {
 }
 </script>
 <style lang="css" scoped>
+.format{
+  padding: 10px;
+  margin: 0;
+  border-radius: 20px;
+  color:#343a40;
+}
 .bordinha{
   border-radius: 30px;
 }
