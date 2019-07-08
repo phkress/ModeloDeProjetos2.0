@@ -739,13 +739,13 @@
       </b-col>
     </b-form-row>
     <b-form-row class="mb-2">
-      <b-col cols="2">
+      <b-col cols="2" v-if="formulario.status !=='Entregue'">
         <b-button type="submit" variant="primary">
             Salvar sem enviar
         </b-button>
       </b-col>
       <b-col>
-        <b-button type="button" variant="success" @click="sendForm()">
+        <b-button type="button" variant="success" v-if="formulario.status !=='Entregue'" @click="sendForm()">
             Salvar e Enviar para: {{bstatus}}
         </b-button>
       </b-col>
