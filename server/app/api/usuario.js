@@ -8,7 +8,7 @@ module.exports = function(app){
 
   api.usuario = (req,res) =>{
     let token = req.headers['x-access-token'];
-    
+
     if (token) {
       console.log('Token recebido, decodificando...');
       jwt.verify(token, app.get('secret'), function(err, decoded) {
@@ -46,6 +46,15 @@ module.exports = function(app){
     			console.log(error);
     			res.sendStatus(500);
     		})
+    };
+    api.adiciona = (req,res)=>{
+      model.create(req.body)
+        .then(function(usuario){
+          res.json(usuario);
+        }, err=>{
+          console.log(err);
+          res.sendStatus(500);
+        });
     };
 
   return api;

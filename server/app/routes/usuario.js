@@ -4,6 +4,7 @@ module.exports = function(app){
 
   app.route('/v1/usuario')
      .get(api.usuario)
+ 		 .post(api.adiciona);
   app.route('/v1/usuario/:id')
      .put(api.atualiza)
 };
