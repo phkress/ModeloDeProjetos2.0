@@ -54,10 +54,28 @@
       >
         <b-form-input id="nested-login" v-model='usuario.login'></b-form-input>
       </b-form-group>
+      <div id='password' v-if='password'>
+      <b-form-group
+        label-cols-sm="3"
+        label="Senha:"
+        label-align-sm="right"
+        label-for="nested-senha"
+      >
+        <b-form-input id="nested-senha" v-model='usuario.login'></b-form-input>
+      </b-form-group>
+      <b-form-group
+        label-cols-sm="3"
+        label="Confirmação:"
+        label-align-sm="right"
+        label-for="nested-confirmação"
+      >
+        <b-form-input id="nested-confirmação" v-model='usuario.login'></b-form-input>
+      </b-form-group>
+    </div>
     </b-form-group>
     <b-form-group>
-      <b-button  variant="primary" class="right" @click="grava()">
-          Salvar
+      <b-button  :variant="color" class="right" @click="grava()">
+          {{botao}}
       </b-button>
     </b-form-group>
   </b-card>
@@ -69,8 +87,23 @@ import UsuarioService from '../../../domain/usuario/UsuarioService';
 export default {
   name: "cardProfileForm",
   props:{
-    label: String,
+    label: {
+      type:String,
+      default: 'Suas Informações'
+    },
     user: Object,
+    botao:{
+      type:String,
+      default:'Salvar'
+    },
+    password: {
+      type: Boolean,
+      default: false
+    },
+    color:{
+      type: String,
+      default: 'primary'
+    }
   },
   data: () => ({
     usuario: new Usuario()
