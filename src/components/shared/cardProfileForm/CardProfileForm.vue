@@ -178,6 +178,7 @@ export default {
           this.usuario.login = ""
           this.usuario.senha = ""
           this.usuario.confirmacao = ""
+          this.$emit('atualiza-lista')
         }
     },
     loading(){
@@ -186,8 +187,6 @@ export default {
   },
   created(){
     this.usuarioService = new UsuarioService(this.$resource);
-
-
   }
 }
 </script>

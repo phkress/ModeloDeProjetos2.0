@@ -7,8 +7,12 @@ module.exports = function(app){
   let model = mongoose.model('Usuario');
 
   api.usuario = (req,res) =>{
-    let token = req.headers['x-access-token'];
 
+    let token = req.headers['x-access-token'];
+    if(!req.params.id){
+      console.log('Nenhum token enviado');
+      return res.sendStatus(403);
+    }
     if (token) {
       console.log('Token recebido, decodificando...');
       jwt.verify(token, app.get('secret'), function(err, decoded) {
@@ -56,6 +60,36 @@ module.exports = function(app){
           res.sendStatus(500);
         });
     };
+    api.listaUsuario = (req,res)=>{
+      let user = [];
+      model.find()
+  		.then(function(usuarios) {
+        for (var i = 0; i < usuarios.length; i++) {
+          user.push({
+            login: usuarios[i].login,
+            nome: usuarios[i].nome,
+            sobreNome: usuarios[i].sobreNome,
+            email: usuarios[i].email,
+            role: usuarios[i].role,
+            _id: usuarios[i]._id
+          })
+        }
+        res.json(user);
+  		}, function(error) {
+  			console.log(error);
+  			res.sendStatus(500);
+  		});
+    }
+    api.removePorId = function(req, res) {
 
+  		model.remove({'_id' : req.params.id})
+  		.then(function() {
+  			res.sendStatus(200);
+  		}, function(error) {
+  			console.log(error);
+  			res.sendStatus(500);
+  		});
+
+  	};
   return api;
 };
