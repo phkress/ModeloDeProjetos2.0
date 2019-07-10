@@ -3,7 +3,7 @@
     <b-card bg-variant="light" v-on="loading()">
       <b-form @submit.prevent="grava()">
     <b-form-group
-      label-cols-lg="3"
+      label-cols-lg="2"
       :label=label
       label-size="lg"
       label-class="font-weight-bold pt-0"
