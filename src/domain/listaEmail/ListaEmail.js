@@ -1,9 +1,12 @@
 export default class ListaEmail {
-  constructor(projeto=[],compra=[],comercial=[],engenharia=[],financeiro=[]){
-    this.projeto= projeto;
-    this.compra= compra;
-    this.comercial= comercial;
-    this.engenharia= engenharia;
-    this.financeiro= financeiro;
+  constructor(lancado=[],aberto=[],preViabilidade=[],orcamento=[],compras=[],engenharia=[],instalacao=[],entregue=[]){
+    this.lancado = lancado;
+    this.aberto = aberto
+    this.preViabilidade = preViabilidade
+    this.orcamento = orcamento
+    this.compras = compras
+    this.engenharia = engenharia
+    this.instalacao = instalacao
+    this.entregue = entregue
   }
 }

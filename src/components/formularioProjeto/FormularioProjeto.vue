@@ -775,7 +775,7 @@ export default {
           edicao : false ,
           showMe: {},
           msg:null,
-          bstatus:null,
+          bstatus:'Aberto',
           file:null,
           solicitantes:[{ text: 'Escolha um...', value: null },{ text: 'Comercial', value: 'Comercial' },"Diretoria Operações","Operação","Outros"],
           options:[
@@ -1050,7 +1050,6 @@ export default {
 
     },
     setNewStatus(status){
-      console.log(status);
       let newStatus;
       switch(status){
         case 'Lançando':

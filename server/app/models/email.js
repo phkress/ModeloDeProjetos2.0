@@ -1,19 +1,28 @@
 const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
-  projeto:{
+  lancado:{
     type:Array
   },
-  compra:{
+  aberto:{
     type:Array
   },
-  comercial:{
+  preViabilidade:{
+    type:Array
+  },
+  orcamento:{
+    type:Array
+  },
+  compras:{
     type:Array
   },
   engenharia:{
     type:Array
   },
-  financeiro:{
+  instalacao:{
+    type:Array
+  },
+  entregue:{
     type:Array
   }
 

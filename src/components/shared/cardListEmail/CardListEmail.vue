@@ -14,23 +14,37 @@
                :items="eItens"
                :fields="eFields"
       >
-      <template slot="Projeto" slot-scope="row">
+      <template slot="Lançando" slot-scope="row">
         <b-form-checkbox
-          v-model="listaEmail.projeto"
+          v-model="listaEmail.lancado"
           :value="row.item"
         >
         </b-form-checkbox>
       </template>
-      <template slot="Compra" slot-scope="row">
+      <template slot="Aberto" slot-scope="row">
         <b-form-checkbox
-          v-model="listaEmail.compra"
+          v-model="listaEmail.aberto"
           :value="row.item"
         >
         </b-form-checkbox>
       </template>
-      <template slot="Comercial" slot-scope="row">
+      <template slot="Pré-Viabilidade" slot-scope="row">
         <b-form-checkbox
-          v-model="listaEmail.comercial"
+          v-model="listaEmail.preViabilidade"
+          :value="row.item"
+        >
+        </b-form-checkbox>
+      </template>
+      <template slot="Orçamento" slot-scope="row">
+        <b-form-checkbox
+          v-model="listaEmail.orcamento"
+          :value="row.item"
+        >
+        </b-form-checkbox>
+      </template>
+      <template slot="Compras" slot-scope="row">
+        <b-form-checkbox
+          v-model="listaEmail.compras"
           :value="row.item"
         >
         </b-form-checkbox>
@@ -42,9 +56,16 @@
         >
         </b-form-checkbox>
       </template>
-      <template slot="Financeiro" slot-scope="row">
+      <template slot="Instalação" slot-scope="row">
         <b-form-checkbox
-          v-model="listaEmail.financeiro"
+          v-model="listaEmail.instalacao"
+          :value="row.item"
+        >
+        </b-form-checkbox>
+      </template>
+      <template slot="Entregue" slot-scope="row">
+        <b-form-checkbox
+          v-model="listaEmail.entregue"
           :value="row.item"
         >
         </b-form-checkbox>
