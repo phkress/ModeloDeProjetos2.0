@@ -118,6 +118,9 @@ export default {
       type:String,
       default: 'Suas Informações'
     },
+    options:{
+      type:Array
+    },
     user: Object,
     botao:{
       type:String,
@@ -137,7 +140,7 @@ export default {
     showDismissibleAlert: false,
     alertColor:'danger',
     msg:'Erro!',
-    options: ["Projeto","Compra","Comercial","Engenharia","Financeiro"]
+
   }),
   methods:{
     confirmarSenha(){

@@ -5,7 +5,7 @@
         Lista dos usuarios cadastrados no sistema e seus setores
       </b-card-text>
       <b-card-text>
-        <b-table striped hover :fields="tfields" :items="titens">
+        <b-table striped :fields="lFields" :items="lItens">
           <template slot="ação" slot-scope="row">
             <b-button size="sm" variant="danger"  @click="excluir(row.index, row.item._id)">
               Excluir
@@ -21,8 +21,8 @@
 export default {
   name: "cardListaUsuario",
   props:{
-    titens: Array,
-    tfields: Array,
+    lItens: Array,
+    lFields: Array,
   },
   data: () => ({
   }),
