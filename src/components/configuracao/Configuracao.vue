@@ -30,7 +30,11 @@
               :eFields="eFields"
               :listaEmail="elistaEmail"
               @salvar-listaDeEmail="salvarListaEmail"
-          ></cardEmail>
+          >
+          <b-alert v-model="showDismissibleAlert" :variant='alertColor' dismissible>
+            {{msg}}
+          </b-alert>
+        </cardEmail>
         </b-col>
       </b-row>
     </b-container>
@@ -55,11 +59,19 @@ export default {
     lItens:[],
     eItens:[],
     lFields:['login','nome','sobreNome','email','role','ação'],
-    eFields:["email","Projeto","Compra","Comercial","Engenharia","Financeiro"],
+    eFields:["email",'Lançando','Aberto','Pré-Viabilidade','Orçamento','Compras','Engenharia','Instalação','Entregue'],
     options: ["Projeto","Compra","Comercial","Engenharia","Financeiro"],
-    elistaEmail: new ListaEmail()
+    elistaEmail: new ListaEmail(),
+    showDismissibleAlert: false,
+    alertColor:'danger',
+    msg:'Erro!',
   }),
   methods:{
+    showAlert(status,variante,text){
+      this.showDismissibleAlert= status;
+      this.msg = text
+      this.alertColor = variante
+    },
     listaEmail(){
       this.eItens = [];
       for (var i = 0; i < this.lItens.length; i++) {
@@ -89,8 +101,12 @@ export default {
     salvarListaEmail(){
       this.listaEmailService
           .cadastra(this.elistaEmail)
-          .then(listaEmail => this.elistaEmail = listaEmail, err =>{
+          .then(listaEmail => {
+            this.elistaEmail = listaEmail
+            this.showAlert(true,'success','Lista salva com sucesso!')
+          }, err =>{
             console.log(err);
+            this.showAlert(false,'danger','Erro!')
           });
           this.carregarListaEmail();
     },

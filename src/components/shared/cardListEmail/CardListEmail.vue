@@ -9,6 +9,7 @@
         class="mb-0"
       >
       </b-form-group>
+      <slot></slot>
       <b-table striped
                responsive="sm"
                :items="eItens"
