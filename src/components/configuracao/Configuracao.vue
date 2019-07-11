@@ -2,7 +2,7 @@
   <div id="configuracao">
     <b-container fluid>
       <b-row class="mt-3">
-        <b-col lg="7">
+        <b-col cols="12" sm="12" lg="7">
           <cardList
             :lItens="lItens"
             :lFields="lFields"
@@ -10,7 +10,7 @@
           >
           </cardList>
         </b-col>
-        <b-col lg="5">
+        <b-col cols="12" sm="12" lg="5">
           <cardForm
            label="Novo Usuario"
            :user='usuario'
@@ -24,7 +24,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="12">
+        <b-col sm="12" cols="12">
           <cardEmail
               :eItens="eItens"
               :eFields="eFields"

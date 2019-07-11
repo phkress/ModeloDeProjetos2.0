@@ -10,6 +10,7 @@
       >
       </b-form-group>
       <b-table striped
+               responsive="sm"
                :items="eItens"
                :fields="eFields"
       >
