@@ -1,7 +1,9 @@
 module.exports = (app) =>{
 
   var api = app.api.teste;
-  app.get('/testeFind', api.lista);
+  //app.get('/testeFind', api.lista);
+  //app.get('/testeEmail', api.enviarEmail);
+  app.get('/testeSetTo', api.setTo);
   // app.get('/testeFindForm', api.listaForm);
   // app.get('/testeFindFormName', api.listaNome);
   //app.get('/testeAdd', api.adiciona);

@@ -30,6 +30,7 @@
               :eFields="eFields"
               :listaEmail="elistaEmail"
               @salvar-listaDeEmail="salvarListaEmail"
+              @reload-listaDeEmail="reload"
           >
           <b-alert v-model="showDismissibleAlert" :variant='alertColor' dismissible>
             {{msg}}
@@ -72,6 +73,11 @@ export default {
       this.msg = text
       this.alertColor = variante
     },
+    reload(){
+      this.carregarListaEmail();
+      this.showAlert(true,'warning','Lista Atualizada com sucesso!');
+
+    },
     listaEmail(){
       this.eItens = [];
       for (var i = 0; i < this.lItens.length; i++) {
@@ -103,7 +109,7 @@ export default {
           .cadastra(this.elistaEmail)
           .then(listaEmail => {
             this.elistaEmail = listaEmail
-            this.showAlert(true,'success','Lista salva com sucesso!')
+            this.showAlert(true,'success','Lista salva com sucesso!');
           }, err =>{
             console.log(err);
             this.showAlert(false,'danger','Erro!')
@@ -113,7 +119,7 @@ export default {
     carregarListaEmail(){
       this.listaEmailService
         .lista()
-        .then(listaEmail =>{;
+        .then(listaEmail =>{
           if(listaEmail !== 'undefined' && listaEmail.length > 0){
             this.elistaEmail = listaEmail[0];
           }

@@ -3,16 +3,42 @@ const sha256 = require('js-sha256').sha256;
 const jwt  = require('jsonwebtoken');
 const pdfMake = require('pdfmake/build/pdfmake.js');
 const pdfFonts = require('pdfmake/build/vfs_fonts.js');
+const sendEmail = require('../services/sendEmail');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 module.exports = function(app) {
   let api = {};
   let model = mongoose.model('Usuario');
   let model2 = mongoose.model('Formulario');
+  let model3 = mongoose.model('Email');
 
   api.test = (req,res) =>{
 
   };
+  api.enviarEmail = (req,res)=>{
+        sendEmail.send().then(info=>{
+          console.log(info);
+          res.json(info);
+    			res.sendStatus(200);
+        })
+  }
+  api.setTo = (req,res)=>{
+    let status = "Aberto";
+
+    model3.find()
+    .then(function(listaEmail) {
+      return listaEmail[0];
+    }, function(error) {
+      console.log(error);
+			res.sendStatus(500);
+    }).then(listaEmail=>{
+
+    }, function(error) {
+      console.log(error);
+			res.sendStatus(500);
+    })
+  };
+
   api.log = (req,res) =>{
     console.log(req.body);
   };

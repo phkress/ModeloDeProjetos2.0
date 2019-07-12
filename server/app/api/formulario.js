@@ -42,7 +42,7 @@ module.exports = function(app) {
 					 timer:formularioNome[i].timer
 				 });
       }
-      console.log(resposta);
+      //console.log(resposta);
       res.json(resposta);
 		}, function(error) {
 			console.log(error);
@@ -75,6 +75,7 @@ module.exports = function(app) {
 
 		model.findByIdAndUpdate(req.params.id, req.body)
 		.then(function(formulario) {
+			console.log(formulario)
 			res.json(formulario);
 		}, function(error) {
 			console.log(error);

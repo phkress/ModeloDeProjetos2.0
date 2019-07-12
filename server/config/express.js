@@ -21,6 +21,7 @@ consign({cwd: 'app'})
 	  // .then('routes/pdf.js')
 	  .then('routes/auth.js')
     .then('routes')
+    .then('services')
     .into(app);
 
 module.exports = app;

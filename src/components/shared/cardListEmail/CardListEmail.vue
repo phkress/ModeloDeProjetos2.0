@@ -72,9 +72,12 @@
         </b-form-checkbox>
       </template>
       </b-table>
-      <b-button  variant="primary" class="right" @click='salvar()'>
-          Salvar
-      </b-button>
+        <b-button  variant="primary" class="right" @click='salvar()'>
+            Salvar
+        </b-button>
+        <b-button  variant="info" class="right mx-2" @click='reload()'>
+            Reload
+        </b-button>
     </b-card>
   </div>
 </template>
@@ -91,6 +94,9 @@ export default {
   methods: {
     salvar(id) {
       this.$emit('salvar-listaDeEmail',id);
+    },
+    reload() {
+      this.$emit('reload-listaDeEmail');
     }
   }
 }
