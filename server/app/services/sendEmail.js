@@ -10,7 +10,9 @@ let to = [];
 let assunto = "Nova tarefa!! ✔ - ";
 let text = "";
 
-let testeForm = { capex: [],
+let testeForm = { capex:
+   [ { descricao: 'item1', valor: '2000.00', parcela: '2' },
+     { descricao: 'item2', valor: '4000.00', parcela: '4' } ],
   areasEnvolvidas: [ 'Implantação' ],
   _id: '5d2394ddf729933194e509bc',
   numeroDoProjeto: '0004/YIPI',
@@ -24,27 +26,51 @@ let testeForm = { capex: [],
   checkbox: 'UP GRADE LINK RÁDIO',
   descricaoDaDemanda: 'tretreterte',
   imageSrc: null,
-  prioridade: 'NaN',
-  impacto: '',
-  prioridadeData: '',
-  precificacao: { valorStandard: 'NaN', precoSugerido: 'NaN', parcelas: 1 },
-  ittotal: 0,
-  popSaida: '',
-  popPassagem: '',
+  prioridade: 'Alta',
+  impacto: '18',
+  prioridadeData: '2019-07-25',
+  precificacao:
+   { valorStandard: '1000.00',
+     precoSugerido: '1690.00',
+     parcelas: '3',
+     qtdeMb: '10',
+     valorMb: '100',
+     customMb: '5.65',
+     valorInstalacao: '1500',
+     markUP: '50',
+     valorCobrado: '1700',
+     payback: 8 },
+  ittotal: 6000,
+  popSaida: 'Muzema',
+  popPassagem: 'CEO',
   equipsPop: '',
   equipsCliente: '',
   ip: '',
   mask: '',
   gateway: '',
   entregasSeremDefinidas: '',
-  popAUtilizar: '',
+  popAUtilizar: 'Adeus',
   pendencias: '',
   contatos: '',
   parecer: '',
-  cet: 'NaN',
+  cet: '377.60',
   status: 'Lançando',
   __v: 0 }
 
+
+function getItensCapex(capexLista, compras){
+  this.list = capexLista;
+  let lista = "<ul>";
+  for (var i = 0; i < list.length; i++) {
+    lista+="<li> Item: "+list[i].descricao
+    if(compras){
+      lista+= "Valor: "+list[i].valor+" Parcelas: "+list[i].parcela;
+    }
+    lista+="</li>";
+  }
+  lista+="</ul>";
+  return lista
+}
 
 function getGrupoEmail(statusProjeto, emails){
   let emailList;
@@ -107,27 +133,33 @@ function setTo(statusProjeto){
 }
 function setText(statusProjeto, formulario){
   text="";
+  let msgText="";
+  let lista="";
   switch(statusProjeto){
     case 'Aberto':
-      text = "";
+      text = "<p>Aberto novo Projeto! </p><p>Nome: "+  formulario.nomeDoProjeto+ "</p><p>Numero: "+ formulario.numeroDoProjeto +"</p>";
       break;
     case 'Pré-Viabilidade':
-      text = "";
+      text = "<p>Pré Viabilidade para o Projeto "+  formulario.nomeDoProjeto+ "</p><p>Tido da Demanada"+ formulario.checkbox +"</p>><p>Descrição da Demanada"+ formulario.descricaoDaDemanda +"</p>"
       break;
     case 'Orçamento':
-      text = "";
+      msgText = "<p>Segue solicitação de Orçamento para os itens abaixo, afim de dar continuidade ao projeto "+ formulario.nomeDoProjeto+ "</p>";
+      lista= getItensCapex(formulario.capex, false);
+      text = msgText+lista;
       break;
     case 'Compras':
-      text = "";
+      msgText = "<p>Segue solicitação de Compras para os itens abaixo, afim de dar continuidade ao projeto "+ formulario.nomeDoProjeto+ "</p>";
+      lista= getItensCapex(formulario.capex, true);
+      text = msgText+lista;
       break;
      case 'Engenharia':
-      text = "";
+      text = "<p>Segue solicitação de informação de ip do projeto"+  formulario.nomeDoProjeto+ "</p>";
       break;
     case 'Instalação':
-      text = "";
+      text = "<p>Segue solicitação de instalacao do projeto"+  formulario.nomeDoProjeto+ "</p>";
       break;
    case 'Entregue':
-      text = "";
+      text = "<p>Finalizado Projeto! </p><p>Nome: "+  formulario.nomeDoProjeto+ "</p><p>Numero: "+ formulario.numeroDoProjeto +"</p>";
       break;
   case 'Lançando':
      text = "<p>Lançado novo Projeto! </p><p>Nome: "+  formulario.nomeDoProjeto+ "</p><p>Numero: "+ formulario.numeroDoProjeto +"</p>";
@@ -143,6 +175,7 @@ function setSubject(statusProjeto, formulario){
   return assunto;
 }
 function createEmail(statusProjeto, formulario){
+  var deferred = q.defer();
   let transporter = nodemailer.createTransport(emailConfig);
    setSubject(statusProjeto, formulario)
    setText(statusProjeto, formulario)
@@ -160,31 +193,30 @@ function createEmail(statusProjeto, formulario){
             subject: assunto,
             html: text
           });
-          return (info)
+          return info;
         },err=>{
           throw new Error(err);
           console.log(err)
         })
         .then(info=>{
-          console.log(info)
+          // console.log(info)
+          deferred.resolve(info)
         },err=>{
-          throw new Error(err);
+          deferred.reject(new Error(err));
           console.log(err)
         })
-
+        return deferred.promise;
 }
-createEmail('Lançando', testeForm)
-sendEmail.send = (statusProjeto, statusSolicitacao, formulario)=>{
-            var deferred = q.defer();
-            let transporter = nodemailer.createTransport(emailConfig);
 
-            let info = transporter.sendMail({
-              from: '"Sistema de Projetos 👻" <no-reply@yipi.com>',
-              to: to,
-              subject: assunto,
-              html: text
-            });
-            deferred.resolve(info)
+sendEmail.send = (statusProjeto, formulario)=>{
+             var deferred = q.defer();
+            createEmail(statusProjeto, formulario)
+                .then(info=>{
+                  deferred.resolve(info)
+                },err=>{
+                  deferred.reject(new Error(err));
+                })
+          // setTimeout(()=>{deferred.resolve('ok')},2000)
           return deferred.promise;
         }
 module.exports = sendEmail;

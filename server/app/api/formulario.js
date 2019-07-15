@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var moment = require('moment');
+const sendEmail = require('../services/sendEmail');
+const mongoose = require('mongoose');
+const moment = require('moment');
 moment.locale('pt-br');
 
 module.exports = function(app) {
@@ -10,13 +11,16 @@ module.exports = function(app) {
 
   api.adiciona = (req,res)=>{
     model.create(req.body)
-		.then(function(usuario) {
-			res.json(usuario);
+		.then(function(formulario) {
+			res.json(formulario);
 		}, function(error) {
 			// console.log('não conseguiu');
 			console.log(error);
 			res.sendStatus(500);
 		});
+		sendEmail.send(req.body.status, req.body).then(info=>{
+			console.log(info)
+		},err=>{console.log(err)});
   },
 	api.lista = (req,res) =>{
     model.find()
@@ -75,12 +79,15 @@ module.exports = function(app) {
 
 		model.findByIdAndUpdate(req.params.id, req.body)
 		.then(function(formulario) {
-			console.log(formulario)
 			res.json(formulario);
 		}, function(error) {
 			console.log(error);
 			res.sendStatus(500);
 		})
+		sendEmail.send(req.body.status, req.body).then(info=>{
+			console.log(info)
+		},err=>{console.log(err)});
+
 	};
 
 
