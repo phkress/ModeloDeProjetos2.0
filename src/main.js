@@ -12,7 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 Vue.use(VueResource);
 Vue.use(VueRouter);
-Vue.http.options.root = 'http://localhost:3005';
+Vue.http.options.root = 'http://localhost:3006';
 
 Vue.http.interceptors.push(function(request, next) {
   request.headers.set('x-access-token', store.token);
