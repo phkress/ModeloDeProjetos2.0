@@ -7,56 +7,8 @@ let model = mongoose.model('Email');
 
 let sendEmail = {};
 let to = [];
-let assunto = "Nova tarefa!! ✔ - ";
+let assunto = "";
 let text = "";
-
-let testeForm = { capex:
-   [ { descricao: 'item1', valor: '2000.00', parcela: '2' },
-     { descricao: 'item2', valor: '4000.00', parcela: '4' } ],
-  areasEnvolvidas: [ 'Implantação' ],
-  _id: '5d2394ddf729933194e509bc',
-  numeroDoProjeto: '0004/YIPI',
-  nomeDoProjeto: 'teste',
-  data: '2019-07-10',
-  solicitante: 'Comercial',
-  solicitanteOutros: '',
-  responsavelDemanda: 'teste',
-  responsavelAlteracao: 'teste',
-  tituloDemanda: 'teste',
-  checkbox: 'UP GRADE LINK RÁDIO',
-  descricaoDaDemanda: 'tretreterte',
-  imageSrc: null,
-  prioridade: 'Alta',
-  impacto: '18',
-  prioridadeData: '2019-07-25',
-  precificacao:
-   { valorStandard: '1000.00',
-     precoSugerido: '1690.00',
-     parcelas: '3',
-     qtdeMb: '10',
-     valorMb: '100',
-     customMb: '5.65',
-     valorInstalacao: '1500',
-     markUP: '50',
-     valorCobrado: '1700',
-     payback: 8 },
-  ittotal: 6000,
-  popSaida: 'Muzema',
-  popPassagem: 'CEO',
-  equipsPop: '',
-  equipsCliente: '',
-  ip: '',
-  mask: '',
-  gateway: '',
-  entregasSeremDefinidas: '',
-  popAUtilizar: 'Adeus',
-  pendencias: '',
-  contatos: '',
-  parecer: '',
-  cet: '377.60',
-  status: 'Lançando',
-  __v: 0 }
-
 
 function getItensCapex(capexLista, compras){
   this.list = capexLista;
@@ -140,23 +92,26 @@ function setText(statusProjeto, formulario){
       text = "<p>Aberto novo Projeto! </p><p>Nome: "+  formulario.nomeDoProjeto+ "</p><p>Numero: "+ formulario.numeroDoProjeto +"</p>";
       break;
     case 'Pré-Viabilidade':
-      text = "<p>Pré Viabilidade para o Projeto "+  formulario.nomeDoProjeto+ "</p><p>Tido da Demanada"+ formulario.checkbox +"</p>><p>Descrição da Demanada"+ formulario.descricaoDaDemanda +"</p>"
+      text = "<p>Por favor viabilizar e informar lista de material do projeto "+formulario.nomeDoProjeto+"</p>"
       break;
     case 'Orçamento':
-      msgText = "<p>Segue solicitação de Orçamento para os itens abaixo, afim de dar continuidade ao projeto "+ formulario.nomeDoProjeto+ "</p>";
+      msgText = "<p>Favor precificar com menor valor e encaminhar a aquisição.</p> <p>Projeto: "+ formulario.nomeDoProjeto+ "</p>";
       lista= getItensCapex(formulario.capex, false);
       text = msgText+lista;
       break;
     case 'Compras':
-      msgText = "<p>Segue solicitação de Compras para os itens abaixo, afim de dar continuidade ao projeto "+ formulario.nomeDoProjeto+ "</p>";
+      msgText = "<p>Favor efetuar compra referente ao projeto "+ formulario.nomeDoProjeto+", informar data prevista</p>";
       lista= getItensCapex(formulario.capex, true);
       text = msgText+lista;
       break;
      case 'Engenharia':
-      text = "<p>Segue solicitação de informação de ip do projeto"+  formulario.nomeDoProjeto+ "</p>";
+      text = "<p>Favor avaliar demanda e informar dados para instalação conforme lista abaixo</p>";
+      text += text + "<p> Pop Utilizado:</p>"+formulario.popAUtilizar;
+      text += text + "<p> Pop Saida:</p>"+formulario.popSaida;
+      text += text + "<p> Pop Passagem:</p>"+formulario.popPassagem;
       break;
     case 'Instalação':
-      text = "<p>Segue solicitação de instalacao do projeto"+  formulario.nomeDoProjeto+ "</p>";
+      text = "<p>Favor agendar instalação do projeto "+formulario.nomeDoProjeto+" e informar ao comercial</p>";
       break;
    case 'Entregue':
       text = "<p>Finalizado Projeto! </p><p>Nome: "+  formulario.nomeDoProjeto+ "</p><p>Numero: "+ formulario.numeroDoProjeto +"</p>";
@@ -171,7 +126,7 @@ function setText(statusProjeto, formulario){
   return text;
 }
 function setSubject(statusProjeto, formulario){
-  assunto += statusProjeto + " - "+ formulario.nomeDoProjeto+ " -  "+ formulario.numeroDoProjeto;
+  assunto = "Nova tarefa!! ✔ - Ref: "+ statusProjeto + " - "+ formulario.nomeDoProjeto+ " -  "+ formulario.numeroDoProjeto;
   return assunto;
 }
 function createEmail(statusProjeto, formulario){
