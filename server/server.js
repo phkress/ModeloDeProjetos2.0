@@ -3,6 +3,6 @@ var app = require('./config/express');
 require('./config/database')('mongodb://localhost/modeloDeProjeto');
 
 http.createServer(app)
-.listen(3005, function() {
+.listen(3006, function() {
 	console.log('Servidor iniciado');
 });
