@@ -54,7 +54,7 @@
               </router-link>
             </td>
             <td>
-              <a :href='"http://localhost:3005/v1/formulario/imprimir/"+form._id'>
+              <a :href='"http://localhost:3006/v1/formulario/imprimir/"+form._id'>
                 <button type="button" class="btn btn-link">
                     <span class="glyphicon glyphicon-print"></span>
                     Imprimir
@@ -136,15 +136,12 @@ export default {
   },
   created() {
     this.service = new FormularioService(this.$resource);
-
     this.service
       .lista()
       .then(formularios => this.formularios = formularios, err => {
-        // this.$router.push("login");
+        this.$router.push("login");
         console.log(err)
       });
-
-
   }
 }
 </script>
