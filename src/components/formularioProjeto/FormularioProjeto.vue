@@ -1118,7 +1118,7 @@ export default {
       this.service
         .busca(this.id)
         .then(form => {
-          if(form.precificacao = 'undefined'){
+          if(form.precificacao == 'undefined'){
             form.precificacao ={};
           }else{
             form.precificacao ={
@@ -1133,10 +1133,10 @@ export default {
           }
           this.formulario = form
           this.bstatus = this.setNewStatus(form.status);
-          this.outputValorStandard()
-          this.outputValorCet()
-          this.outputValorSugerido()
-          this.outputPayback()
+          this.outputValorStandard();
+          this.outputValorCet();
+          this.outputValorSugerido();
+          this.outputPayback();
         }, err => {
           // this.$router.push("login");
           console.log(err)
